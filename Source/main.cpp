@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <fstream>
 
 #include <SDL2/SDL.h>
 #include <time.h>
@@ -7,9 +7,16 @@
 #include <cmath>
 #include <stdio.h>
 #include <string>
+#include "tiles.h"
+
+
+using namespace std;
+
 
 #define wWidth 1024
 #define wHeight 800
+
+#define RPNUM 50
 
 using namespace std;
 
@@ -26,6 +33,27 @@ public:
 
 };
 
+class Point
+{
+public:
+	int x;
+	int y;
+	float targetLength;
+	float length;
+	float angle;
+	Point();
+};
+
+Point::Point()
+{
+	x = 0;
+	y = 0;
+	targetLength = 0;
+	length = 0;
+	angle = 0;
+}
+
+/*
 class Mouse
 {
 private:
@@ -33,12 +61,20 @@ private:
 	float y;
 
 };
+*/
 
 Player player;
 
+Point mouse,center;
+
+Point rPoints[RPNUM];
+
+Tile map[256][144];
 
 
-int main(int argc, char* args[]) {
+
+
+int main(int argc, char *argv[]){
 
 	// initialize SDL
 	SDL_Init(SDL_INIT_VIDEO);
@@ -72,9 +108,35 @@ int main(int argc, char* args[]) {
 
 	while (!quit)
 	{
+
+		SDL_GetMouseState(&mouse.x, &mouse.y);
+
+		center.x = mouse.x;
+				center.y = mouse.y;
+
+				for (int i = 0; i < RPNUM; i++)
+				{
+					rPoints[i].targetLength = 500;
+					rPoints[i].length = rPoints[i].targetLength;
+					rPoints[i].angle = i * (360/RPNUM);
+					rPoints[i].x = center.x + rPoints[i].length * cos(rPoints[i].angle);
+					rPoints[i].y = center.y + rPoints[i].length * sin(rPoints[i].angle);
+					if (rPoints[i].x < 0)
+						rPoints[i].x = 0;
+					if (rPoints[i].y < 0)
+						rPoints[i].y = 0;
+
+					if (rPoints[i].x > wWidth-4)
+						rPoints[i].x = wWidth-4;
+					if (rPoints[i].y > wHeight-4)
+						rPoints[i].y = wHeight-4;
+
+				}
+
 		while (SDL_PollEvent(&keyboardevent)){
 			switch (keyboardevent.type){
 			case SDL_KEYDOWN:
+
 				switch (keyboardevent.key.keysym.sym) {
 				
 				case SDLK_UP:
@@ -101,11 +163,18 @@ int main(int argc, char* args[]) {
 					player.x+= 10;
 
 					break;
+
+
+				case SDLK_s:
+					quit = true;
+					break;
+
+
 				case SDLK_ESCAPE:
 					quit = true;
 					break;
-				}
 
+				}
 				default:
 					break;
 				}
@@ -126,7 +195,17 @@ int main(int argc, char* args[]) {
 
 		//s1.update(delay,wall,obj);
 
-		
+		SDL_SetRenderDrawColor(r1, 255, 255, 255, 255);
+
+				for (int i = 0; i < RPNUM; i++)
+				{
+					//SDL_RenderSetScale(r1, 1, 1);
+					SDL_RenderDrawLine(r1, center.x, center.y, rPoints[i].x, rPoints[i].y);
+					SDL_RenderSetScale(r1, 10, 10);
+					SDL_RenderDrawPoint(r1, rPoints[i].x / 10, rPoints[i].y/10);
+					SDL_RenderSetScale(r1, 1, 1);
+
+				}
 
 
 
