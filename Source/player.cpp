@@ -8,6 +8,8 @@ Player::Player(SDL_Renderer*renderer,string filePath,string audioPath,float x,fl
 	playerHealth = 100.0f;
 	maxHealth = 100.0f;
 
+	elevation = 0;
+
 
 	active = true;
 	speed = 500.0f;
@@ -142,6 +144,12 @@ void Player::Draw(SDL_Renderer*renderer)
 		}
 	}
 }
+
+void Player::OnControllerButton(const SDL_ControllerButtonEvent event)
+{
+
+}
+
 
 void Player::OnControllerAxis(const SDL_ControllerAxisEvent event)
 {

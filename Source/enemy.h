@@ -38,7 +38,7 @@ class Enemy
 {
 public:
 	bool active;
-	SDL_Texture*texture;
+	//SDL_Texture*texture;
 	SDL_Rect posRect;
 	float xDir,yDir;
 	float speed;
@@ -58,6 +58,7 @@ public:
 	Enemy(SDL_Renderer*renderer,string filePath,string audiopath,float x, float y);
 	void Update(float deltaTime, SDL_Rect playerRect);
 	void Draw(SDL_Renderer*renderer);
+	void RemoveHealth(float damg);
 	void Reset();
 	~Enemy();
 };

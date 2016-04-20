@@ -28,8 +28,25 @@ Enemy::Enemy(SDL_Renderer*renderer, string filePath, string audioPath, float x, 
 
 void Enemy::Reset()
 {
-	e
+	posRect.x = -1000;
+		pos_X = posRect.x;
+
+		health = 10;
+
+		active = false;
 }
+
+
+void Enemy::RemoveHealth(float damg)
+{
+	health -= damg;
+	if (health <= 0)
+	{
+		Reset();
+	}
+}
+
+
 void Enemy::Update(float deltaTime, SDL_Rect playerRect)
 {
 
@@ -123,7 +140,7 @@ void Enemy::Update(float deltaTime, SDL_Rect playerRect)
 
 void Enemy::Draw(SDL_Renderer*renderer)
 {
-	SDL_RenderCopyEx(renderer,texture,NULL,&posRect,angle,&center,SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, eTex,NULL,&posRect,angle,&center,SDL_FLIP_NONE);
 }
 
 Enemy::~Enemy()

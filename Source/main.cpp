@@ -11,6 +11,7 @@
 #include "player.h"
 
 #include "enemy.h"
+#include "wall.h"
 
 
 using namespace std;
@@ -278,6 +279,8 @@ int main(int argc, char* argv[]) {
 
 			//reset the player
 			player1.Reset();
+			//reset the player
+			enemy1.Reset();
 
 			players1 = true;
 			cout << "The Game State is Players 1" << endl;
@@ -288,6 +291,8 @@ int main(int argc, char* argv[]) {
 				thisTime = SDL_GetTicks();
 				deltaTime = (float) (thisTime - lastTime) / 1000;
 				lastTime = thisTime;
+
+
 
 				//check for input events
 				if (SDL_PollEvent(&event)) {
@@ -326,6 +331,7 @@ int main(int argc, char* argv[]) {
 						break;
 					}
 				}
+
 
 				//UpdateBackground(deltaTime);
 				if (player1.active) {
@@ -379,6 +385,7 @@ int main(int argc, char* argv[]) {
 		break;	//end players1 case
 		}
 	}
+
 
 	//Destroy window
 

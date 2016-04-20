@@ -68,6 +68,8 @@ public:
 	float speed;
 	float pos_X,pos_Y;
 
+	float elevation;
+
 
 	float x, y, playerangle;
 
